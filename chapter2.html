@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>chapter2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="chapter2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chapter2_files/libs/quarto-html/quarto.js"></script>
+<script src="chapter2_files/libs/quarto-html/popper.min.js"></script>
+<script src="chapter2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chapter2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chapter2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chapter2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chapter2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chapter2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="tutorial-2" class="level1 unnumbered">
+<h1 class="unnumbered">Tutorial #2</h1>
+<p>In this course, we will be using the R software environment for all our analysis. You will learn R and data analysis techniques simultaneously. This tutorial introduces some basic programming concepts and terminology. Instead of asking you to memorize all these concepts and terminology right now, we will guide you so that you will “learn by doing.” To help you learn, we will always use a different font to distinguish regular text from <code>computer_code</code>. In this tutorial, we will review the difference between objects and functions, arithmetic and logical operators, the most common data types in R, and explore a simple dataset. The best way to master these topics is, in our opinions, through deliberate practice with R and lots of repetition.</p>
+<section id="sec-ilo-intro" class="level2">
+<h2 class="anchored" data-anchor-id="sec-ilo-intro">Intended Learning Outcomes</h2>
+<p>* Be able to explain the difference between a data object and a function.</p>
+<p>* Be familiar with the common types of data and data structures in R.</p>
+<p>* Understand how and when to use arithmetic and logical operators in R.</p>
+<p>* Be able to explore a dataset using basic Base R functions.</p>
+</section>
+<section id="sec-intro-basic_terms" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-basic_terms">Data vs.&nbsp;Functions</h2>
+<p>In R, we first need to grasp the notions of objects and functions. From a task-oriented perspective, using R consists of</p>
+<ol type="1">
+<li>creating or loading data (inputs, material, values), and</li>
+<li>calling or evaluating functions (commands, actions, verbs) for</li>
+<li>computing and constructing new data (outputs, images, tables, results).</li>
+</ol>
+<p>Confusingly, both data and functions in R are objects (stuff) and evaluating functions typically returns or creates new objects (more stuff). Thus, the process of computation can be viewed as a cycle that uses data (as input) to create more data (as output). Although any part of a program is an object, functions are those objects that do things by processing or performing tasks on data and create new objects. To distinguish data from functions, think of data as <em>matter</em> (i.e., material, stuff, or values) that are being measured, manipulated, or processed, and of functions as <em>procedures</em> (i.e., actions, operations, or verbs) that measure, manipulate, or process data. Put more succinctly, functions are objects that do things — they process data into other data.</p>
+<p>Although this tutorial addresses data and functions in the context of <strong>base</strong> R, the same distinctions also apply to other packages and languages. In the following, we will introduce some ways to describe data (by <em>type</em> and <em>shape</em>), learn to create new data objects (by assigning them with <code>&lt;-</code>), and apply some pre-defined functions to these data objects. [and to create new data objects?]</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+R Notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To make it easier to distinguish between <em>data objects</em> and <em>functions</em>, we will typically add (round) <em>parentheses</em> to function names. Thus, <code>abc()</code> indicates a function, whereas <code>abc</code> indicates a data object. However, keep in mind that there are some R functions that work without parentheses (e.g., arithmetic operators <code>+</code> and <code>*</code> that are positioned between their arguments).</p>
+</div>
+</div>
+</section>
+<section id="sec-intro-functions" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-functions">Functions</h2>
+<p>Functions, also called commands, perform tasks in R. They take in inputs called <strong>arguments</strong> and return outputs. Most functions require the user to manually specify a function’s arguments. For example, if type <code>sqrt()</code> and press Enter/Return, you will get an error message. There are some functions for which the user can either manually specify a function’s arguments or use the function’s default values. For example, the function <code>seq()</code> in R generates a sequence of numbers. If you just run <code>seq()</code> it will return the value 1. That doesn’t seem very useful! This is because the default arguments are set as <code>seq(from = 1, to = 1)</code>. Thus, if you don’t pass in different input values for <code>from</code> and <code>to</code> to change this behavior, R just assumes all you want is the number 1. You can change the argument values by updating the values after the <code>=</code> sign. If we try out <code>seq(from = 2, to = 5)</code> or alternatively <code>seq(2:5)</code>, we will get the result <code>2 3 4 5</code> that we might expect.</p>
+<p>Over the semester you will get lots of practice working with functions and understanding their behaviors. In addition to the <code>sqrt()</code> and the <code>seq()</code> functions, we have also used the <code>install.packages()</code> and the <code>library()</code> functions. There are thousands of functions built into R and even more can be added through packages. These functions do not appear in the workspace because you did not define them, but they are available for immediate use.</p>
+</section>
+<section id="sec-intro-data" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-data">Data Objects</h2>
+<p>When formally dealing with data, it makes sense to distinguish between a variable and its values: A variable is a dimension or property that describes a unit of observation (e.g., a person, a school, a country, etc.) and can typically assume different values. By contrast, values are the concrete instantiations that a variable assigns to every unit of observation and are further characterized by their range (e.g., categorical vs.&nbsp;continuous values) and their type (e.g., numeric, character, or logical values). For instance, an individual can be characterized by the variables name, age, and whether or not they are classified as an adult. The values corresponding to these variables would be of type text (e.g., “Lisa”), numeric (e.g., 16, age in years), and logical (TRUE vs.&nbsp;FALSE, defined as a function of age).</p>
+<section id="data-types" class="level3">
+<h3 class="anchored" data-anchor-id="data-types">Data Types</h3>
+<p>To make the best out of the R programming language, a programmer needs a strong understanding of the basic data types and data structures, and how to operate on them.</p>
+<p>In R, data is stored in objects that are distinguished by their <em>type</em> and by their <em>shape</em>:</p>
+<ul>
+<li>The most common types of data are:
+<ul>
+<li>doubles - for representing all real numbers (whole numbers and decimals, such as -55, 0.75, 5);</li>
+<li>integers - for representing only whole numbers (such as -1, 0, 85, 2568);</li>
+<li>characters - for representing text or string data (such as “apple”, “laywer”);</li>
+<li>logicals - for representing a variable with only truth values of type logical <code>TRUE</code> or <code>FALSE</code> (aka. Boolean values);</li>
+<li>time - for representing dates and times;</li>
+</ul></li>
+<li>Other important data type in R include:
+<ul>
+<li><code>NA</code> - Missing values;</li>
+<li><code>NaN</code> - Not a Number e.g.&nbsp;sqrt(-4);</li>
+<li><code>Inf</code> - Infinite values e.g.&nbsp;5/0.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that R distinguishes between two numeric data types (integer and double). It defaults to storing numerical data as double. You need to add a <code>L</code> after the number to tell R you want the number stored as an integer or use the function <code>as.integer()</code>. Keep in mind that unless you tell R something is an integer, it will store it as double. This default behavior is helpful since we will mostly be working with doubles, not integers. In general, you can ignore this distinction but occasionally it comes up so it is good to know it exists. Also note that character data type is declared by enclosing it in double quotation marks. Similarly, R will treat numerical data with double quotation marks as character (text/string) data (e.g., “432.5”).</p>
+</div>
+</div>
+</section>
+<section id="convert-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="convert-data-types">Convert data types</h3>
+<p>https://rpubs.com/STEMResearch/data-types-in-r</p>
+<p>There are two functions, <code>typeof()</code> and <code>class()</code>, that can be applied to any R object to check what type of data object it is. Data types can also be converted from one type to another using the <code>as._____</code> functions.</p>
+<p>The function <code>typeof()</code> can be applied to any R object to check what type of data object it is. Data types can also be converted from one type to another using the <code>as._____</code> functions.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">as.double()</td>
+<td style="text-align: left;">Convert to double</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.integer()</td>
+<td style="text-align: left;">Convert to integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.numeric()</td>
+<td style="text-align: left;">Convert to numeric</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.character()</td>
+<td style="text-align: left;">Convert to character</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.logical()</td>
+<td style="text-align: left;">Convert to logical</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.complex()</td>
+<td style="text-align: left;">Convert to complex</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-shapes" class="level3">
+<h3 class="anchored" data-anchor-id="data-shapes">Data Shapes</h3>
+<p>https://bookdown.org/rwnahhas/IntroToR/object-types.html</p>
+<p>The shape of an object mostly depends on its structure. A clear understanding of R data structures is crucial since these are the objects you will manipulate on a day-to-day basis in R.</p>
+<p>The most common shapes of data are: + scalars are individual elements (e.g., “A”, 4, TRUE); + vectors are linear chains or sequences of objects (can be <em>either</em> numeric or character but not both); + tables are rectangular data structures with two dimensions (with rows and columns).</p>
+<p>There are additional data shapes (e.g., multi-dimensional data structures) and types (e.g., for representing categorical or geographical data), but the ones mentioned here are by far the most important ones.</p>
+</section>
+<section id="vectors" class="level3">
+<h3 class="anchored" data-anchor-id="vectors">Vectors</h3>
+<p>The main type of object used in R for representing data is a vector. A vector is a column of <strong><em>numbers</em></strong> or <strong><em>character strings</em></strong> indexed by the integers 1, 2, …, n, where n is the length of the vector. Vectors come in different data types and shapes. They can be <strong><em>either</em></strong> numeric or character but <strong><em>not</em></strong> both. If you attempt to create a vector with both numeric values and character strings, R will convert the numeric values to character.</p>
+<p>We create a vector of numbers and display it like this:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this creates a vector of heights, in cm</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">203</span>, <span class="dv">148</span>, <span class="dv">156</span>, <span class="dv">158</span>, <span class="dv">167</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The c() command is shorthand for <em>combine</em> or <em>concatenate</em>, so in the example above we are combining the individual elements (the 5 numbers) into a new vector that is assigned the label <em>heights</em> using <code>&lt;-</code>, the assignment operator. And we can check the values stored in the variable by asking R to print them. You can either type <code>print(heights)</code>, or just write the name of the variable alone <code>heights</code>, which will print it by default.</p>
+<p>We can also create a vector of text elements:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this creates a vector of text </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ben"</span>, <span class="st">"Rosa"</span>, <span class="st">"Sue"</span>, <span class="st">"Joe"</span>, <span class="st">"Lucia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The quotes around “Ben”, “Rosa”, etc. are essential here. Without the quotes R will assume there are objects called Ben, Rosa, etc. in the workspace. As these objects don’t exist in R’s memory, there will be an error message.</p>
+<p>Note: If you are using RStudio, they will be stored in our environment located in the top right window.</p>
+<p>When simultaneously considering the shape and type of data, we can distinguish and begin to understand data structures.</p>
+</section>
+<section id="data-structures-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="data-structures-in-r">Data Structures in R</h3>
+<p>Data structures are constructs designed to store data. As we mentioned in Section 1.1.3, the data structures of a programming language are similar to the grammatical and spelling rules of natural languages. As long as we reach our goals, we neither care about nor need to know the rules. But whenever unexpected outcomes or errors occur, repairing them in a competent fashion requires considerable background knowledge and experience.</p>
+<p>Although the term “data structure” is sometimes used to refer to just the shape of data, understanding the key data structures available in R requires viewing them as a combination of (a) some data shape, and (b) the fact whether they contain a single or multiple types of data.</p>
+<p>Table 1.1 provides an overview of the key data structures provided by the designers of R. Note that Table 1.1 distinguishes between three different data shapes (in its rows) and between data structures for “homogeneous” vs.&nbsp;“heterogeneous” data types (in its columns):</p>
+</section>
+</section>
+<section id="sec-intro-operations" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-operations">Basic Computation in R</h2>
+<p>The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, R can be used like your pocket calculator, or more likely the one you have on your phone. We demonstrated this in <em>Tutorial #1</em> when we performed some simple computations. As with many calculators, the operators are <strong><code>+</code></strong> for <em>addition</em>, <strong><code>-</code></strong> for <em>subtraction</em>, <strong><code>*</code></strong> for <em>multiplication</em>, <strong><code>/</code></strong> for <em>division</em> and <strong><code>^</code></strong> for <em>exponentiation</em>. Often parentheses are used to clarify the order of operations.</p>
+<p><code>+</code> addition</p>
+<p><code>-</code> subtraction</p>
+<p><code>*</code> multiplication</p>
+<p><code>/</code> division</p>
+<p><code>abs()</code> absolute value</p>
+<p><code>x^n</code> raise x to power of some number n</p>
+<p><code>sqrt()</code> square root of a number or variable ( n^2 does same)</p>
+<p><code>log()</code> natural log</p>
+<p><code>exp()</code> antilog, exponent of variable or number</p>
+<p><code>log2()</code> log of other bases, eg. log base 2</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="logical-operators" class="level3">
+<h3 class="anchored" data-anchor-id="logical-operators">Logical Operators</h3>
+<p>The main difference between arithmetic operators and logical operators is that logical operators are used to make comparisons and will yield a logical (TRUE/FALSE) output. These are really helpful when we want to identify certain qualities about the data.</p>
+<p>Below is a list of some common logical operators that can be used on R:</p>
+<p><code>==</code> is equal to</p>
+<p><code>!=</code> is not equal to</p>
+<p><code>&lt;</code> less than</p>
+<p><code>&gt;</code> greater than</p>
+<p><code>&lt;=</code> less than or equal to</p>
+<p><code>&gt;=</code> greater than or equal to</p>
+<p>For multiple conditions…</p>
+<p><code>|</code> or operator</p>
+<p><code>&amp;</code> and operator<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><img src="https://methodenlehre.github.io/SGSCLM-R-course/figures/transform-logical.png" class="img-fluid"></p>
+<p>Here’s a helpful visual about logical operators, x is the left circle, y is the right circle.</p>
+<p>Examples of logicals being helpful.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examples:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">==</span> <span class="dv">4</span> <span class="co">#FALSE, 3 is not equal to 4</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">!=</span> <span class="dv">4</span> <span class="co">#TRUE, 3 is not equal to 4</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">"cat"</span> <span class="sc">==</span> <span class="st">"cat"</span> <span class="co">#TRUE, this works with strings too "cat" is the same as "cat"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="sec-intro-explore_dataset" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-explore_dataset">Exploring a Dataset</h2>
+<p>Let’s put everything we’ve learned so far into practice and start exploring some real data! Data comes to us in a variety of formats, from pictures to text to numbers. Throughout this book, we’ll focus on datasets that are saved in “spreadsheet”-type format. This is probably the most common way data are collected and saved in many fields. Remember from Subsection 1.2.1 that these “spreadsheet”-type datasets are called data frames in R. We’ll focus on working with data saved as data frames throughout this book.</p>
+<p>Let’s first load all the packages needed for this chapter, assuming you’ve already installed them. Read Section 1.3 for information on how to install and load R packages if you haven’t already.</p>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://methodenlehre.github.io/SGSCLM-R-course/the-r-language.html" class="uri">https://methodenlehre.github.io/SGSCLM-R-course/the-r-language.html</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
